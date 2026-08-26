@@ -12,6 +12,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<!-- Google Ads 태그 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18396747421"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-18396747421');</script>
 <style>
   :root{
     --bg:#0B1020; --bg2:#111834; --panel:#151D3B; --line:#26305A; --line2:#33407A;
@@ -362,6 +365,13 @@
 
 <script>
 (function(){
+  // ---- 전환 측정 ----
+  var CONVERSION_LEAD = "AW-18396747421/pOG2CPbk3eMcEJ2toMRE";   // 리드 양식 제출 (주 전환)
+  var CONVERSION_KAKAO = "AW-18396747421/tz3CCMvyhOgcEJ2toMRE";  // 카카오톡 채널 클릭 (보조 전환)
+  document.querySelectorAll('a[href*="pf.kakao.com"]').forEach(function(a){
+    a.addEventListener("click", function(){ try{ gtag('event','conversion',{ 'send_to': CONVERSION_KAKAO }); }catch(e){} });
+  });
+
   // ---- 접수 엔드포인트 (Google Forms) ----
   var FORM_ENDPOINT = "https://docs.google.com/forms/d/e/1FAIpQLSc42uFlLboldqW4gGG9HIbApW1ANoRWsAjcq7c8PGlUPbj-4Q/formResponse";
   var FORM_FIELDS = { company:1337896810, name:1703613287, email:915197609, inquiry_type:1445229034, phone:1871231234, product_url:591812841, quantity:2038996987, unit_price:707221991, service_total:1214443813,
@@ -435,6 +445,7 @@
   });
   function fail(msg, el){ status.className="f-status err"; status.textContent=msg; if(el) el.focus(); }
   function done(){
+    try{ gtag('event','conversion',{ 'send_to': CONVERSION_LEAD, 'value': 1.0, 'currency': 'KRW' }); }catch(e){}
     form.style.display="none"; var d=$("quoteDone"); d.style.display="block"; d.scrollIntoView({behavior:"smooth",block:"center"});
   }
 })();
