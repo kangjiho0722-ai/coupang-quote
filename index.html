@@ -59,6 +59,9 @@
   .field{margin-bottom:14px}
   .field label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:6px}
   .field label i{font-style:normal;color:var(--lime);margin-left:4px}
+  .field select{width:100%;background:var(--bg2);border:1px solid var(--line2);border-radius:10px;color:var(--text);font:inherit;font-size:16px;padding:13px 40px 13px 14px;outline:none;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239AA5CF' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer}
+  .field select:focus{border-color:var(--lime);box-shadow:0 0 0 3px rgba(199,244,100,.15)}
+  .field select option{background:#111834;color:#EEF1FB}
   .field input,.field textarea{width:100%;background:var(--bg2);border:1px solid var(--line2);border-radius:10px;color:var(--text);font:inherit;font-size:16px;padding:13px 14px;outline:none;transition:border-color .15s,box-shadow .15s}
   .field input:focus,.field textarea:focus{border-color:var(--lime);box-shadow:0 0 0 3px rgba(199,244,100,.15)}
   .field input::placeholder,.field textarea::placeholder{color:var(--dim)}
@@ -184,23 +187,48 @@
 
     <div class="quote" id="quote">
       <header><h2>30초 간편 견적</h2><span>quote · v1</span></header>
-      <p class="hint">상품 URL과 수량만 먼저 알려주세요. 단가와 예상 합계를 바로 계산합니다.</p>
+      <p class="hint">연락처만 남기셔도 됩니다. 상품 URL과 수량을 입력하면 단가와 예상 합계가 바로 계산됩니다.</p>
       <form id="quoteForm" novalidate>
         <div class="hp"><label>website<input name="website" tabindex="-1" autocomplete="off"></label></div>
-        <div class="field">
-          <label for="q-url">쿠팡 상품 URL <i>*</i></label>
-          <input id="q-url" name="product_url" type="url" inputmode="url" placeholder="https://www.coupang.com/vp/products/..." autocomplete="off">
+        <div class="row2">
+          <div class="field">
+            <label for="q-company">상호 <i>*</i></label>
+            <input id="q-company" name="company" type="text" placeholder="상호를 입력해 주세요" autocomplete="organization">
+          </div>
+          <div class="field">
+            <label for="q-name">이름 <i>*</i></label>
+            <input id="q-name" name="name" type="text" placeholder="담당자 성함을 입력해 주세요" autocomplete="name">
+          </div>
         </div>
         <div class="row2">
           <div class="field">
-            <label for="q-qty">진행 희망 수량(건) <i>*</i></label>
-            <input id="q-qty" name="quantity" type="text" inputmode="numeric" placeholder="예: 400" autocomplete="off">
-            <div class="aux">최소 10건 · 400건부터 수량 할인</div>
-          </div>
-          <div class="field">
             <label for="q-phone">연락처 <i>*</i></label>
             <input id="q-phone" name="phone" type="tel" inputmode="tel" placeholder="010-0000-0000" autocomplete="tel">
-            <div class="aux">카카오톡 상담을 원하시면 <a href="https://pf.kakao.com/_bKAxeG/chat" target="_blank" rel="noopener" style="color:var(--lime)">채널로 문의</a></div>
+          </div>
+          <div class="field">
+            <label for="q-email">이메일 <small style="color:var(--dim);font-weight:500">선택</small></label>
+            <input id="q-email" name="email" type="email" inputmode="email" placeholder="답변받을 이메일을 입력해 주세요" autocomplete="email">
+          </div>
+        </div>
+        <div class="field">
+          <label for="q-type">문의 유형 <i>*</i></label>
+          <select id="q-type" name="inquiry_type">
+            <option value="">선택해 주세요</option>
+            <option>쿠팡 리뷰 운영 견적</option>
+            <option>진행 가능 여부 확인</option>
+            <option>기존 진행 건 문의</option>
+            <option>기타</option>
+          </select>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="q-url">쿠팡 상품 URL <small style="color:var(--dim);font-weight:500">선택</small></label>
+            <input id="q-url" name="product_url" type="url" inputmode="url" placeholder="https://www.coupang.com/vp/products/..." autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="q-qty">진행 희망 수량(건) <small style="color:var(--dim);font-weight:500">선택</small></label>
+            <input id="q-qty" name="quantity" type="text" inputmode="numeric" placeholder="예: 400" autocomplete="off">
+            <div class="aux">최소 10건 · 400건부터 수량 할인 · 입력하면 견적이 바로 계산됩니다</div>
           </div>
         </div>
 
@@ -212,14 +240,14 @@
         </div>
 
         <div class="field">
-          <label for="q-msg">추가 요청 <small style="color:var(--dim);font-weight:500">선택</small></label>
+          <label for="q-msg">추가 상담 내용 <small style="color:var(--dim);font-weight:500">선택</small></label>
           <textarea id="q-msg" name="message" placeholder="원하는 일정이나 질문을 적어 주세요."></textarea>
         </div>
         <input type="hidden" name="utm" id="q-utm">
 
         <label class="consent">
           <input type="checkbox" id="q-agree">
-          <span>견적·상담을 위해 상품 URL, 신청 수량, 연락처와 문의 내용을 수집하며 상담 완료 후 1년간 보관합니다. 동의를 거부할 수 있으나 견적 접수가 제한됩니다. <a href="privacy.html" target="_blank" rel="noopener">개인정보처리방침</a></span>
+          <span>견적·상담을 위해 상호, 이름, 연락처, 이메일(선택), 상품 URL·수량(선택)과 문의 내용을 수집하며 상담 완료 후 1년간 보관합니다. 동의를 거부할 수 있으나 견적 접수가 제한됩니다. <a href="privacy.html" target="_blank" rel="noopener">개인정보처리방침</a></span>
         </label>
         <div class="f-status" id="q-status"></div>
         <button class="btn" type="submit" id="q-submit">비공개 문의로 접수하기 <span class="arrow">↗</span></button>
@@ -336,7 +364,7 @@
 (function(){
   // ---- 접수 엔드포인트 (Google Forms) ----
   var FORM_ENDPOINT = "https://docs.google.com/forms/d/e/1FAIpQLSc42uFlLboldqW4gGG9HIbApW1ANoRWsAjcq7c8PGlUPbj-4Q/formResponse";
-  var FORM_FIELDS = { phone:1871231234, product_url:591812841, quantity:2038996987, unit_price:707221991, service_total:1214443813,
+  var FORM_FIELDS = { company:1337896810, name:1703613287, email:915197609, inquiry_type:1445229034, phone:1871231234, product_url:591812841, quantity:2038996987, unit_price:707221991, service_total:1214443813,
                       shipping_total:1882891700, grand_total:1881295168, message:453762290, utm:1058640087, page:1377796449, ua:1748454678 };
   var SHIPPING = 2000, MIN_QTY = 10;
   function unitPrice(q){ return q>=1000?990 : q>=800?1100 : q>=600?1200 : q>=400?1300 : 1500; }
@@ -380,16 +408,24 @@
   var form=$("quoteForm"), status=$("q-status"), btn=$("q-submit");
   form.addEventListener("submit", function(ev){
     ev.preventDefault(); status.className="f-status"; status.textContent="";
+    var company=$("q-company").value.trim(), name=$("q-name").value.trim(), email=$("q-email").value.trim(), type=$("q-type").value;
     var u = url.value.trim();
-    if(!/^https?:\/\/(www\.|m\.|link\.)?coupang\.com\//i.test(u)) return fail("쿠팡 상품 URL을 입력해 주세요. (https://www.coupang.com/… 형식)", url);
-    calc();
-    if(last.q<MIN_QTY) return fail("진행 희망 수량을 10건 이상 입력해 주세요.", qty);
+    if(!company) return fail("상호를 입력해 주세요.", $("q-company"));
+    if(!name) return fail("담당자 성함을 입력해 주세요.", $("q-name"));
     if(!/^\d{9,11}$/.test(digits(phone.value))) return fail("연락 가능한 전화번호를 입력해 주세요.", phone);
+    if(email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail("이메일 형식을 확인해 주세요.", $("q-email"));
+    if(!type) return fail("문의 유형을 선택해 주세요.", $("q-type"));
+    if(u && !/^https?:\/\/(www\.|m\.|link\.)?coupang\.com\//i.test(u)) return fail("쿠팡 상품 URL 형식을 확인해 주세요. (https://www.coupang.com/… 형식)", url);
+    calc();
+    if(digits(qty.value) && last.q<MIN_QTY) return fail("진행 희망 수량은 10건 이상 입력해 주세요.", qty);
     if(!$("q-agree").checked) return fail("개인정보 수집·이용에 동의해 주세요.", $("q-agree"));
     if(form.website.value) return done();
 
-    var payload = { phone:phone.value.trim(), product_url:u, quantity:String(last.q), unit_price:String(last.u), service_total:String(last.s),
-                    shipping_total:String(last.sh), grand_total:String(last.t), message:$("q-msg").value.trim(), utm:$("q-utm").value, page:location.href, ua:navigator.userAgent };
+    var hasQ = last.q>=MIN_QTY;
+    var payload = { company:company, name:name, email:email, inquiry_type:type, phone:phone.value.trim(), product_url:u,
+                    quantity: hasQ?String(last.q):"", unit_price: hasQ?String(last.u):"", service_total: hasQ?String(last.s):"",
+                    shipping_total: hasQ?String(last.sh):"", grand_total: hasQ?String(last.t):"",
+                    message:$("q-msg").value.trim(), utm:$("q-utm").value, page:location.href, ua:navigator.userAgent };
     btn.disabled=true; btn.textContent="접수 중…";
     var fd = new URLSearchParams();
     Object.keys(FORM_FIELDS).forEach(function(k){ fd.append("entry."+FORM_FIELDS[k], payload[k]==null?"":String(payload[k])); });
